@@ -1,0 +1,34 @@
+{
+  "name": "pms-be",
+  "version": "1.0.0",
+  "description": "Project Management Sytstem",
+  "license": "ISC",
+  "author": "Kevin Musanii",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "eslint-plugin": "^1.0.1",
+    "express": "^5.2.1",
+    "pg": "^8.22.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^1.0.0",
+    "uuid": "^14.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.1",
+    "@types/pg": "^8.20.0",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.63.0",
+    "@typescript-eslint/parser": "^8.63.0",
+    "eslint": "^10.6.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "prettier": "^3.9.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}
