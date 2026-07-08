@@ -2,6 +2,7 @@ import cluster from 'cluster';
 import os from 'os';
 const numCPUs = os.cpus().length;
 import { ExpressServer } from './express_server';
+import {DatabaseUtil} from '../utils/db';
 
 if (cluster.isPrimary) {
     console.log(`Master process PID: ${process.pid}`);
@@ -18,6 +19,8 @@ with code ${code} and signal ${signal}`);
 } else {
     // connect the express server
     const server = new ExpressServer();
+
+    new DatabaseUtil();
     process.on('uncaughtException', (error: Error) => {
         console.error(`Uncaught exception in worker process
 ${process.pid}:`, error);
