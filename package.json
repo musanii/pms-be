@@ -6,9 +6,11 @@
   "author": "Kevin Musanii",
   "type": "commonjs",
   "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "start": "node index.js",
+  "lint": "eslint .",
+  "test": "jest --runInBand" 
+},
   "dependencies": {
     "eslint-plugin": "^1.0.1",
     "express": "^5.2.1",

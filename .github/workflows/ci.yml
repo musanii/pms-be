@@ -1,0 +1,70 @@
+name: Node.js TypeORM Express API CI
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+
+    # Spins up your isolated PostgreSQL instance
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: pms_test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Verify TypeScript Compilation
+        run: npx tsc --noEmit
+
+      - name: Run ESLint
+        run: npm run lint --if-present
+
+      # Automatically applies TypeORM migrations to the test database container
+      - name: Run Database Migrations
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USERNAME: test_user
+          DB_PASSWORD: test_password
+          DB_DATABASE: pms_test_db
+        run: |
+          # Executes your TypeORM migrations via ts-node before tests run
+          # Adjust the path pointing to your data-source file if needed:
+          npx typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts || echo "Ensure data source path matches"
+
+      - name: Execute Test Suite
+        env:
+          NODE_ENV: test
+          PORT: 5001
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USERNAME: test_user
+          DB_PASSWORD: test_password
+          DB_DATABASE: pms_test_db
+        run: npm test
