@@ -1,12 +1,11 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "module": "NodeNext",          // Updated to match moduleResolution
+        "moduleResolution": "NodeNext", 
         "pretty": true,
         "sourceMap": false,
         "target": "ESNext",
         "outDir": "./dist",
-        "baseUrl": "./src",
         "noImplicitAny": false,
         "esModuleInterop": true,
         "removeComments": true,
@@ -20,7 +19,8 @@
     },
     "include": [
         "src/**/*.ts",
-        "src/**/*.json"
+        "src/**/*.json",
+        "server_config.json"
     ],
     "exclude": [
         "node_modules"
