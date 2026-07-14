@@ -25,7 +25,7 @@ export class Routes {
                 new routeClass(app);
                 console.log(`Router : ${routeClass.name} - Connected`);
             } catch (error) {
-                console.log(`Router : ${routeClass.name} - Failed`);
+                console.log(`Router : ${routeClass.name} - Failed :Error:- ${error}`);
             }
         }
 
