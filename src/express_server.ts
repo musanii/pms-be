@@ -2,6 +2,8 @@ import express from 'express';
 import { Server } from 'http'; // Import the Server type from Node's http module
 import { IServerConfig } from '../utils/config';
 import * as config from '../server_config.json';
+import { Routes } from './routes';
+import  bodyParser  from 'body-parser';
 
 export class ExpressServer {
     // Corrected: Explicitly define the type as Server or null
@@ -13,9 +15,19 @@ export class ExpressServer {
         const port = this.server_config.port ?? 3000;
         const app = express();
 
+         app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: false }));
+       
+
         app.get('/ping', (req, res) => {
             res.send('pong');
         });
+
+        const routes = new Routes(app);
+
+        if(routes) {
+            console.log('Server Routes started for server');
+        }
 
         ExpressServer.server = app.listen(port, () => {
             console.log(`Server is running on port ${port} with pid = ${process.pid}`);
