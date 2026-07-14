@@ -1,5 +1,5 @@
-import { Express } from 'express'
-import { CommentController } from './comments_controller'
+import { Express } from 'express';
+import { CommentController } from './comments_controller';
 export class CommentRoutes {
 
     private baseEndpoint = '/api/comments';

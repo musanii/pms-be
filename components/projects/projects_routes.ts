@@ -1,5 +1,5 @@
-import { Express } from 'express'
-import { ProjectController } from './projects_controller'
+import { Express } from 'express';
+import { ProjectController } from './projects_controller';
 export class ProjectRoutes {
 
     private baseEndpoint = '/api/projects';

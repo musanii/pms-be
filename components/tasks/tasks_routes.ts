@@ -1,5 +1,5 @@
-import { Express } from 'express'
-import { TaskController } from './tasks_controller'
+import { Express } from 'express';
+import { TaskController } from './tasks_controller';
 export class TaskRoutes {
 
     private baseEndpoint = '/api/tasks';

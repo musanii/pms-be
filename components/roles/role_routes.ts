@@ -1,5 +1,5 @@
-import { Express } from 'express'
-import { RoleController } from './roles_controller'
+import { Express } from 'express';
+import { RoleController } from './roles_controller';
 export class RoleRoutes {
 
     private baseEndpoint = '/api/roles';
