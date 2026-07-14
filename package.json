@@ -12,9 +12,11 @@
     "test": "jest --runInBand --passWithNoTests"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "body-parser": "^2.3.0",
     "eslint-plugin": "^1.0.1",
     "express": "^5.2.1",
+    "express-validator": "^7.3.2",
     "pg": "^8.22.0",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^1.0.0",

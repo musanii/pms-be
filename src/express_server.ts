@@ -3,7 +3,7 @@ import { Server } from 'http'; // Import the Server type from Node's http module
 import { IServerConfig } from '../utils/config';
 import * as config from '../server_config.json';
 import { Routes } from './routes';
-import  bodyParser  from 'body-parser';
+import  * as bodyParser  from 'body-parser';
 
 export class ExpressServer {
     // Corrected: Explicitly define the type as Server or null
