@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express from 'express';
 import { Server } from 'http'; // Import the Server type from Node's http module
 import { IServerConfig } from '../utils/config';
 import * as config from '../server_config.json';

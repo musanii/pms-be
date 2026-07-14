@@ -1,7 +1,7 @@
 import { 
     Entity, PrimaryGeneratedColumn, Column, 
     CreateDateColumn, UpdateDateColumn 
-} from "typeorm";
+} from 'typeorm';
 
 @Entity()
 export class Roles {
