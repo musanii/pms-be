@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import cluster from 'cluster';
 import os from 'os';
 const numCPUs = os.cpus().length;

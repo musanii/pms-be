@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { DataSource } from 'typeorm';
 import { IServerConfig } from './config';
 import * as config from '../server_config.json';
@@ -9,7 +10,7 @@ import { Comments } from '../components/comments/comments_entity';
 
 export class DatabaseUtil {
     public server_config: IServerConfig = config;
-    
+
     constructor() {
         this.connectDatabase();
     }
