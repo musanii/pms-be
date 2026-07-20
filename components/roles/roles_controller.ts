@@ -2,10 +2,15 @@ import { Response, Request } from 'express';
 import { RolesService } from './roles_service';
 import { BaseController } from '../../utils/base_controller';
 import { Rights } from '../../utils/common';
+import { hasPermission } from '../../utils/auth_util';
 
 export class RoleController extends BaseController {
 
     public async addHandler(req: Request, res: Response): Promise<void> {
+        if (!hasPermission(req.user.rights, 'add_role')) {
+            res.status(403).json({ statusCode: 403, status: 'error', message: 'Unauthorised' });
+            return;
+        }
         try {
             const role = req.body;
             const service = new RolesService();
@@ -32,6 +37,11 @@ export class RoleController extends BaseController {
     }
 
     public async getAllHandler(req: Request, res: Response): Promise<void> {
+        if (!hasPermission(req.user.rights, 'get_all_roles')) {
+            res.status(403).json({ statusCode: 403, status: 'error', message: 'Unauthorised' });
+            return;
+        }
+
         try {
             const service = new RolesService();
             const result = await service.findAll(req.query);
@@ -57,6 +67,10 @@ export class RoleController extends BaseController {
     }
 
     public async getOneHandler(req: Request, res: Response): Promise<void> {
+        if (!hasPermission(req.user.rights, 'get_details_role')) {
+            res.status(403).json({ statusCode: 403, status: 'error', message: 'Unauthorised' });
+            return;
+        }
 
         try {
             const service = new RolesService();
@@ -84,6 +98,10 @@ export class RoleController extends BaseController {
     }
 
     public async updateHandler(req: Request, res: Response) {
+        if (!hasPermission(req.user.rights, 'edit_role')) {
+            res.status(403).json({ statusCode: 403, status: 'error', message: 'Unauthorised' });
+            return;
+        }
         try {
             const role = req.body;
             const service = new RolesService();
@@ -112,6 +130,10 @@ export class RoleController extends BaseController {
     }
 
     public async deleteHandler(req: Request, res: Response) {
+        if (!hasPermission(req.user.rights, 'delete_role')) {
+            res.status(403).json({ statusCode: 403, status: 'error', message: 'Unauthorised' });
+            return;
+        }
 
         try {
             const service = new RolesService();
@@ -168,5 +190,26 @@ export class RolesUtil {
         const roles = await roleService.findByIds(role_ids);
         // Check if all role_ids are found in the database
         return roles.data.length === role_ids.length;
+    }
+
+    public static async getAllRightsFromRoles(role_ids: string[]): Promise<string[]> {
+
+        //Create an instance of RolesService to interract with the roles
+        const roleService = new RolesService();
+
+        //Initialize an array to store the collected rights
+        let rights: string[] = [];
+        //Query the db to validate the provided role_ids
+        const queryData = await roleService.findByIds(role_ids);
+        const roles: Roles[] = queryData.data ? queryData.data : [];
+
+        //Extract rights from each role and add them to the rights array
+        roles.forEach((role) => {
+            const rightFromRole: string[] = role.rights.split(',');
+            rights = [...new Set(rights.concat(rightFromRole))];
+        });
+        //Return the accumulated rights
+        return rights;
+
     }
 }
