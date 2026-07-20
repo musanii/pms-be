@@ -21,7 +21,11 @@ export class Users {
     @Column({ nullable: false })
     password: string;
 
-    // Fixed: Correctly typed relation and nullable constraint moved inside ManyToOne
+    // 1. Add the explicit column for the foreign key string
+    @Column({ name: 'role_id', nullable: false })
+    role_id: string;
+
+    // 2. Link the relation to that same column
     @ManyToOne(() => Roles, { nullable: false })
     @JoinColumn({ name: 'role_id' })
     role: Roles; 

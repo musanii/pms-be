@@ -56,13 +56,13 @@ export class RoleController extends BaseController {
         }
     }
 
-    public  async getOneHandler(req: Request, res: Response): Promise<void>{
+    public async getOneHandler(req: Request, res: Response): Promise<void> {
 
         try {
             const service = new RolesService();
             const result = await service.findOne(req.params.id);
             res.status(res.statusCode).json(result);
-            
+
         } catch (error) {
             if (error instanceof Error) {
                 console.error(`Error in addHandler => ${error.message}`);
@@ -78,7 +78,7 @@ export class RoleController extends BaseController {
                     message: 'An unexpected error occurred.'
                 });
             }
-            
+
         }
 
     }
@@ -89,35 +89,7 @@ export class RoleController extends BaseController {
             const service = new RolesService();
             const result = await service.update(req.params.id, role);
             res.status(result.statusCode).json(result);
-            
-        } catch (error) {
-             if (error instanceof Error) {
-                console.error(`Error in addHandler => ${error.message}`);
-                res.status(500).json({
-                    success: false,
-                    message: 'Internal server error',
-                    error: error.message
-                });
-            } else {
-                console.error('An unexpected controller error occurred:', error);
-                res.status(500).json({
-                    success: false,
-                    message: 'An unexpected error occurred.'
-                });
-            }
-            
-            
-        }
 
-    }
-
-    public async deleteHandler(req: Request, res: Response) {
-
-        try {
-            const service = new RolesService();
-            const result = await service.delete(req.params.id);
-            res.status(result.statusCode).json(result);
-            
         } catch (error) {
             if (error instanceof Error) {
                 console.error(`Error in addHandler => ${error.message}`);
@@ -133,7 +105,35 @@ export class RoleController extends BaseController {
                     message: 'An unexpected error occurred.'
                 });
             }
-            
+
+
+        }
+
+    }
+
+    public async deleteHandler(req: Request, res: Response) {
+
+        try {
+            const service = new RolesService();
+            const result = await service.delete(req.params.id);
+            res.status(result.statusCode).json(result);
+
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(`Error in addHandler => ${error.message}`);
+                res.status(500).json({
+                    success: false,
+                    message: 'Internal server error',
+                    error: error.message
+                });
+            } else {
+                console.error('An unexpected controller error occurred:', error);
+                res.status(500).json({
+                    success: false,
+                    message: 'An unexpected error occurred.'
+                });
+            }
+
         }
 
     }
@@ -160,5 +160,13 @@ export class RolesUtil {
         }
 
         return permissions;
+    }
+
+    public static async checkValidRoleIds(role_ids: string[]) {
+        const roleService = new RolesService();
+        // Query the database to check if all role_ids are valid
+        const roles = await roleService.findByIds(role_ids);
+        // Check if all role_ids are found in the database
+        return roles.data.length === role_ids.length;
     }
 }
