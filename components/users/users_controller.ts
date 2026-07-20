@@ -324,7 +324,14 @@ export class UsersUtil {
             }
 
         } catch (error) {
-            console.error(`Error while getUserFromToken() => ${error.message}`);
+            if (error instanceof Error) {
+               console.error(`Error while getUserFromToken() => ${error.message}`);
+               
+            } else {
+                console.error('An unexpected controller error occurred:', error);
+               
+            }
+            
         }
         return null;
     }
@@ -339,7 +346,12 @@ export class UsersUtil {
             }
 
         } catch (error) {
+            if (error instanceof Error) {
             console.error(`Error while getUserFromToken() => ${error.message}`);
+            }else {
+                console.error('An unexpected controller error occurred:', error);
+               
+            }
         }
         return null;
     }

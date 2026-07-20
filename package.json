@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node api.js && node index.js",
     "lint": "eslint .",
     "test": "jest --runInBand --passWithNoTests"
   },
