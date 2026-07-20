@@ -29,8 +29,13 @@ export const authorize = async (req: Request, res: Response, next: NextFunction)
         next();
 
     } catch (error) {
-        console.error(error.message);
+        if(error instanceof Error)
+        {
+            console.error(error.message);
         return res.status(401).json({ statusCode: 401, status: 'error', message: 'Invalid Token' });
+
+        }
+        
     }
 };
 
