@@ -1,7 +1,4 @@
-import {
-    Entity, PrimaryGeneratedColumn, Column,
-    CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm';
 import { Roles } from '../roles/roles_entity';
 
 @Entity()
@@ -21,18 +18,14 @@ export class Users {
     @Column({ nullable: false })
     password: string;
 
-    // 1. Add the explicit column for the foreign key string
-    @Column({ name: 'role_id', nullable: false })
-    role_id: string;
 
-    // 2. Link the relation to that same column
-    @ManyToOne(() => Roles, { nullable: false })
+    @OneToOne(() => Roles, (roleData) => roleData.role_id)
     @JoinColumn({ name: 'role_id' })
-    role: Roles; 
+    role_id: Roles['role_id'];
 
     @CreateDateColumn()
     created_at: Date;
-    
+
     @UpdateDateColumn()
     updated_at: Date;
 }

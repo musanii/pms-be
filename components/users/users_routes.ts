@@ -35,6 +35,12 @@ export class UserRoutes {
     constructor(app: Express) {
 
         const controller = new UserController();
+        //auth routes
+        app.route('/api/login')
+        .post(controller.login)
+
+        app.route('/api/refresh_token')
+        .post(controller.getAccessTokenFromRefreshToken);
 
         app.route(this.baseEndpoint)
 
