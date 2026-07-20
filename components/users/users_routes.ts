@@ -2,6 +2,7 @@ import { Express } from 'express';
 import { UserController } from './users_controller';
 import { body } from 'express-validator';
 import { validate } from '../../utils/validator';
+import { authorize } from '../../utils/auth_util';
 
 
 const validUserInput = [
@@ -43,10 +44,14 @@ export class UserRoutes {
         .post(controller.getAccessTokenFromRefreshToken);
 
         app.route(this.baseEndpoint)
+            .all(authorize) //Apply authorization middleware to all routes under this endpoint
 
             .get(controller.getAllHandler)
             .post(validate(validUserInput), controller.addHandler);
+          
         app.route(this.baseEndpoint + '/:id')
+          //Apply authorization middleware to all routes under this endpoint
+            .all(authorize)
             .get(controller.getOneHandler)
             .put(controller.updateHandler)
             .delete(controller.deleteHandler);
